@@ -10,12 +10,15 @@ import {
     BadRequestError,
     Authorized,
     NotFoundError,
-    BodyParam
+    BodyParam,
+    Session,
+    QueryParam
 } from "routing-controllers";
 import * as JWT from "jsonwebtoken"
 import { UserService } from "../services/UserService";
 import User from "../models/User";
 import env from "../env/env";
+import NodeRSA = require("node-rsa");
 
 @JsonController()
 export class UserController {
@@ -28,6 +31,18 @@ export class UserController {
         @Ctx() ctx,
     ): Promise<[User[], number]> {
         return this.userService.findAll();
+    }
+
+    @Get("/handshake")
+    async exchangeKeys(
+        @Session() session,
+        @QueryParam('clientPub') clientPub
+    ): Promise<any> {
+        const key = new NodeRSA({b: 512});
+        // const encrypted = key.encrypt(JSON.stringify(ctx.body), 'base64');
+        session.serverPriv = session.serverPriv ? session.serverPriv : key.exportKey('pkcs1-private-pem');
+        session.serverPub = session.serverPub ? session.serverPub : key.exportKey('pkcs1-public-pem');
+        return { pub : "deployed" };
     }
 
     @Get("/users/:id")

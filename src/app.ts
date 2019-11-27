@@ -10,6 +10,7 @@ import * as cors from "koa2-cors";
 import User from "./models/User";
 import * as JWT from "jsonwebtoken";
 import { JWTUtils } from "./utils/Utils";
+import { CryptoMiddleware } from "./middlewares/CryptoMiddleware";
 const session = require('koa-session');
 
 useContainer(Container);
@@ -22,7 +23,7 @@ createConnection(Object.assign(env.db,{
   // creates express app, registers all controller routes and returns you express app instance
   const app = createKoaServer({
     controllers: [__dirname + "/controllers/**/*"],
-    middlewares: [SuccessMiddlware,ErrorMiddleware],
+    middlewares: [SuccessMiddlware, CryptoMiddleware, ErrorMiddleware],
     classTransformer: true,
     authorizationChecker: async (action: Action, roles: string[]) => {
         // here you can use request/response objects from action

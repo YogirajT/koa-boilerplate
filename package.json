@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch-server": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/app.ts"
+    "watch": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/app.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/jsonwebtoken": "^8.3.5",
     "@types/md5": "^2.1.33",
+    "@types/node-rsa": "^1.0.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
     "controllers": "0.0.2",
@@ -25,6 +26,7 @@
     "koa2-cors": "^2.0.6",
     "md5": "^2.2.1",
     "mysql": "^2.17.1",
+    "node-rsa": "^1.0.7",
     "reflect-metadata": "^0.1.13",
     "routing": "0.0.2",
     "routing-controllers": "^0.8.0",
